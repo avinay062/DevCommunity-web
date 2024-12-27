@@ -23,8 +23,9 @@
 - Refactor our code to add contants file + create a component folder
 - you should not be able to access other routes without login
 - if Token is not present, redirect user to login page
-- logout
+- logout feature
 - profile
+- Add validation in login page
 
 
 

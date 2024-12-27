@@ -10,6 +10,7 @@ const Login = () => {
     const [ password, setPassword] = useState("Password@123");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
     const handleLogin= async() =>{
         try{
@@ -19,8 +20,9 @@ const Login = () => {
             }, 
             {withCredentials : true});
             dispatch(addUser(res.data));
-           return navigate('/feed');
+           return navigate('/');
         }catch(err){
+            setError(err?.response?.data || 'Something went Wrong');
             console.log(err)
         }
         
@@ -52,6 +54,7 @@ const Login = () => {
                             className="input input-bordered w-full max-w-xs" />
                         </label>
                     </div>
+                    <p className="text-red-500">{error}</p>
                     <div className="card-actions justify-center">
                         <button 
                         className="btn bg-neutral text-neutral-50"
