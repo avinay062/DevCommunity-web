@@ -26,6 +26,8 @@
 - logout feature
 - profile
 - Add validation in login page
+- get the feed and store the feed in the store
+- build the user card on feed
 
 
 

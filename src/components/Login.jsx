@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ const Login = () => {
     const [error, setError] = useState("");
 
     const handleLogin= async() =>{
+        setError("");
         try{
             const res = await axios.post( BASE_URL+"/login", {
                 emailId,
@@ -63,8 +64,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
 
 export default Login;
