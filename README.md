@@ -28,6 +28,9 @@
 - Add validation in login page
 - get the feed and store the feed in the store
 - build the user card on feed
+- Edit Profile feature
+- Show toast message on profile save
+- see all my connections
 
 
 
