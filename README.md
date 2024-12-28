@@ -31,6 +31,8 @@
 - Edit Profile feature
 - Show toast message on profile save
 - see all my connections
+- see all connection requests
+- Accept/Reject connection request
 
 
 
