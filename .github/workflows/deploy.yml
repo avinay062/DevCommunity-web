@@ -1,6 +1,7 @@
 name: Deploy to EC2
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -8,7 +9,7 @@ on:
 env:
   AWS_REGION: us-east-1 # Change this to your AWS region
   ECR_REPOSITORY: devcommunity-web # Change this to your ECR repository name
-#   EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_HOST: ${{ secrets.EC2_HOST }}
 
 jobs:
   deploy:
@@ -39,28 +40,28 @@ jobs:
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
-    #   - name: Deploy to EC2
-    #     uses: appleboy/ssh-action@master
-    #     with:
-    #       host: ${{ secrets.EC2_HOST }}
-    #       username: ${{ secrets.EC2_USERNAME }}
-    #       key: ${{ secrets.EC2_SSH_KEY }}
-    #       script: |
-    #         # Login to ECR
-    #         aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Login to ECR
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             
-    #         # Pull the latest image
-    #         docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+            # Pull the latest image
+            sudo docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
             
-    #         # Stop and remove the old container if it exists
-    #         docker stop app-container || true
-    #         docker rm app-container || true
+            # Stop and remove the old container if it exists
+            sudo docker stop app-container || true
+            sudo docker rm app-container || true
             
-    #         # Run the new container
-    #         docker run -d \
-    #           --name app-container \
-    #           -p 80:80 \
-    #           ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+            # Run the new container
+            sudo docker run -d \
+              --name web-container \
+              -p 80:80 \
+              ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
             
-    #         # Clean up old images
-    #         docker system prune -f 
+            # Clean up old images
+            sudo docker system prune -f 
