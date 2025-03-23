@@ -23,7 +23,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-neutral">
   <div className="flex-1">
-    <Link to="/" className="btn btn-ghost text-xl text-neutral-50">Developer Community..</Link>
+    <Link to="/" className="btn btn-ghost text-xl text-neutral-50">Developer Community</Link>
   </div>
   { user && (
     <div className="flex-none gap-2">
