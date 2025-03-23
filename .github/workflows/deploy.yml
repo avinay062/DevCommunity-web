@@ -59,7 +59,7 @@ jobs:
             
             # Run the new container
             sudo docker run -d \
-              --name web-container \
+              --name app-container \
               -p 80:80 \
               ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
             
